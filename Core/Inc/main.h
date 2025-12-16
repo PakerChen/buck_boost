@@ -57,11 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-<<<<<<< HEAD
 #define EC11_Button_Pin GPIO_PIN_2
 #define EC11_Button_GPIO_Port GPIOC
-=======
->>>>>>> e6fe05ce2e12f979570d41f9e36a3280f7a708d1
 #define user_led_Pin GPIO_PIN_5
 #define user_led_GPIO_Port GPIOA
 #define KEY1_Pin GPIO_PIN_6
