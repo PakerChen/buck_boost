@@ -26,8 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "oled.h"
-#include "function.h"
+#include "config.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,7 +96,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	HAL_GPIO_WritePin(user_led_GPIO_Port,user_led_Pin,GPIO_PIN_SET);
-	HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_D);                     // ����HRTIM���μ�����
+	HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_D); //pwm波输出
 	HAL_GPIO_WritePin(buzzer_GPIO_Port,buzzer_Pin,GPIO_PIN_RESET);
 	OLED_Init();
 	OLED_Clear();  
@@ -106,7 +105,7 @@ int main(void)
 	HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_R_Pin,GPIO_PIN_SET);
 	page_task(0);//OLED屏幕初始化显示
 	HAL_UART_Receive_IT(&huart2,(uint8_t *)&data,1);
-	printf("sys init");
+	printf("usart init");//初始化系统，
 	HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
   /* USER CODE END 2 */
 

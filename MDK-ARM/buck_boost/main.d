@@ -39,17 +39,3 @@ buck_boost\main.o: ../Core/Inc/FreeRTOSConfig.h
 buck_boost\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 buck_boost\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 buck_boost\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
-buck_boost\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
-buck_boost\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-buck_boost\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
-buck_boost\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-buck_boost\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
-buck_boost\main.o: ../Core/Inc/hrtim.h
-buck_boost\main.o: ../Core/Inc/i2c.h
-buck_boost\main.o: ../Core/Inc/usart.h
-buck_boost\main.o: ../Core/Inc/gpio.h
-buck_boost\main.o: ../user/oled.h
-buck_boost\main.o: ../user/OLED_Data.h
-buck_boost\main.o: ../user/function.h
-buck_boost\main.o: D:\STM32_App\ARM\ARMCC\Bin\..\include\stdio.h
-buck_boost\main.o: D:\STM32_App\ARM\ARMCC\Bin\..\include\stdlib.h

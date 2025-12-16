@@ -7,6 +7,3 @@ buck_boost\list.o: ../Core/Inc/FreeRTOSConfig.h
 buck_boost\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 buck_boost\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 buck_boost\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
-buck_boost\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
-buck_boost\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-buck_boost\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

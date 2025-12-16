@@ -1,6 +1,10 @@
 buck_boost\function.o: ..\user\function.c
-buck_boost\function.o: ..\user\function.h
-buck_boost\function.o: ../Core/Inc/gpio.h
+buck_boost\function.o: ..\user\config.h
+buck_boost\function.o: D:\STM32_App\ARM\ARMCC\Bin\..\include\stdio.h
+buck_boost\function.o: D:\STM32_App\ARM\ARMCC\Bin\..\include\string.h
+buck_boost\function.o: D:\STM32_App\ARM\ARMCC\Bin\..\include\stdlib.h
+buck_boost\function.o: D:\STM32_App\ARM\ARMCC\Bin\..\include\math.h
+buck_boost\function.o: ../Core/Inc/hrtim.h
 buck_boost\function.o: ../Core/Inc/main.h
 buck_boost\function.o: ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h
 buck_boost\function.o: ../Core/Inc/stm32g4xx_hal_conf.h
@@ -35,7 +39,9 @@ buck_boost\function.o: ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr.h
 buck_boost\function.o: ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h
 buck_boost\function.o: ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h
 buck_boost\function.o: ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h
-buck_boost\function.o: D:\STM32_App\ARM\ARMCC\Bin\..\include\stdio.h
-buck_boost\function.o: D:\STM32_App\ARM\ARMCC\Bin\..\include\stdlib.h
-buck_boost\function.o: ..\user\oled.h
+buck_boost\function.o: ../Core/Inc/gpio.h
+buck_boost\function.o: ../Core/Inc/i2c.h
+buck_boost\function.o: ../Core/Inc/usart.h
+buck_boost\function.o: ..\user\OLED.h
 buck_boost\function.o: ..\user\OLED_Data.h
+buck_boost\function.o: ..\user\function.h

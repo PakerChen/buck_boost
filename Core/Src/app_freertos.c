@@ -27,8 +27,9 @@
 /* USER CODE BEGIN Includes */
 #include "hrtim.h"
 #include "queue.h"
-#include "usart.h"
-#include "stdio.h"
+#include "config.h"
+#include <stdio.h>
+#include <sys/types.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,11 +94,12 @@ const osMessageQueueAttr_t myQueue02_attributes = {
 /* USER CODE BEGIN FunctionPrototypes */
 	xQueueHandle  DataQueue;
 	
-	int fputc(int ch,FILE *f)
-	{
-		HAL_UART_Transmit(&huart2,(uint8_t *)&ch,1,1);
-		return ch;
-	}
+	int _write(int fd, char *ptr, int len)
+  { 
+    HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, 0xFFFF);
+    return len;
+  }
+
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
@@ -179,7 +181,7 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
 		//System LED ,When you run this code ,the light will sprinkle.
-		HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
+		
     osDelay(200);//delay 200ms
   }
   /* USER CODE END StartDefaultTask */
@@ -196,36 +198,24 @@ void StartTask02(void *argument)
 {
   /* USER CODE BEGIN StartTask02 */
   /* Infinite loop */
-	static uint16_t duty_val = 2000;
-	static uint8_t cnt =0;
   for(;;)
   {
-		if(HAL_GPIO_ReadPin(KEY2_GPIO_Port,KEY2_Pin)==1)
-		{
-				HAL_GPIO_WritePin(LED_G_GPIO_Port,LED_G_Pin,GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_R_Pin,GPIO_PIN_RESET);
-				//HAL_GPIO_WritePin(buzzer_GPIO_Port,buzzer_Pin,GPIO_PIN_RESET);
-				//osThreadResume(Sys_LED_TaskHandle);this function is aim to make some task to suspend state
-		}
-		else if (HAL_GPIO_ReadPin(KEY2_GPIO_Port,KEY2_Pin)==0)
-		{
-				HAL_GPIO_WritePin(LED_G_GPIO_Port,LED_G_Pin,GPIO_PIN_SET);
-				HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_R_Pin,GPIO_PIN_SET);
-			
-				//HAL_GPIO_WritePin(buzzer_GPIO_Port,buzzer_Pin,GPIO_PIN_SET);
-				//osThreadSuspend(Sys_LED_TaskHandle);//this function is aim to make some task to blocked state
-			
-				//this  function is aim to change duty of pwm
-				cnt++;
-			if(cnt>=2)
-			{
-				duty_val+=200;
-				
-				__HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_D, HRTIM_COMPAREUNIT_1, duty_val); 
-			}
-		}
-		
-    osDelay(1);
+		key_scanTask();
+    printf("key 1 cnt = %d",key[1].cnt);
+    printf(" key 1 flag = %d\r\n",key[1].flag);
+    HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
+    if(key[1].flag == 1)
+    {
+      page_task(1);
+      key[1].flag =0;
+    }
+    else if (key[1].flag ==0)
+    {
+      page_task(0);
+      key[1].flag =0;
+    }
+    OLED_ShowNum(80,0,key[0].cnt,3,OLED_8X16);
+    osDelay(100);
   }
   /* USER CODE END StartTask02 */
 }

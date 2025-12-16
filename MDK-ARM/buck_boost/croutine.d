@@ -6,9 +6,3 @@ buck_boost\croutine.o: ../Core/Inc/FreeRTOSConfig.h
 buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
-buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
-buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
-buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
-buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/croutine.h
-buck_boost\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
