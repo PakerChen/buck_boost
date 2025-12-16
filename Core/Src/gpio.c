@@ -59,12 +59,15 @@ void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(buzzer_GPIO_Port, buzzer_Pin, GPIO_PIN_SET);
 
+<<<<<<< HEAD
   /*Configure GPIO pin : EC11_Button_Pin */
   GPIO_InitStruct.Pin = EC11_Button_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(EC11_Button_GPIO_Port, &GPIO_InitStruct);
 
+=======
+>>>>>>> e6fe05ce2e12f979570d41f9e36a3280f7a708d1
   /*Configure GPIO pin : user_led_Pin */
   GPIO_InitStruct.Pin = user_led_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;

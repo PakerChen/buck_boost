@@ -39,3 +39,10 @@ buck_boost\stm32g4xx_it.o: ../Core/Inc/FreeRTOSConfig.h
 buck_boost\stm32g4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 buck_boost\stm32g4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 buck_boost\stm32g4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+<<<<<<< HEAD
+=======
+buck_boost\stm32g4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+buck_boost\stm32g4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+buck_boost\stm32g4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+buck_boost\stm32g4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+>>>>>>> e6fe05ce2e12f979570d41f9e36a3280f7a708d1

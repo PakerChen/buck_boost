@@ -8,3 +8,11 @@ buck_boost\queue.o: ../Core/Inc/FreeRTOSConfig.h
 buck_boost\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 buck_boost\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 buck_boost\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+<<<<<<< HEAD
+=======
+buck_boost\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+buck_boost\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+buck_boost\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+buck_boost\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+buck_boost\queue.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+>>>>>>> e6fe05ce2e12f979570d41f9e36a3280f7a708d1

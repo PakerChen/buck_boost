@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "config.h"
 #include "main.h"
 #include <sys/types.h>
@@ -40,3 +41,20 @@ void key_scanTask()
 	}
 }
 
+=======
+#include "function.h"
+
+
+
+void page_task(uint8_t select_flag)
+{
+	if(select_flag == 0)//开机默认页面
+	{
+		OLED_ShowString(0,0,"Wait start...",OLED_8X16);
+	}
+	
+	OLED_Update(); // 刷新屏幕显示
+	
+	
+}
+>>>>>>> e6fe05ce2e12f979570d41f9e36a3280f7a708d1
