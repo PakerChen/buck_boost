@@ -215,6 +215,8 @@ void StartTask02(void *argument)
       key[1].flag =0;
     }
     OLED_ShowNum(80,0,key[0].cnt,3,OLED_8X16);
+    OLED_ShowNum(80,20,key[1].cnt,3,OLED_8X16);
+    OLED_ShowNum(80,40,key[2].cnt,3,OLED_8X16);
     osDelay(100);
   }
   /* USER CODE END StartTask02 */

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "config.h"
 #include "main.h"
 #include <sys/types.h>
@@ -22,13 +21,13 @@ void key_scanTask()
 {
 	key[0].status = HAL_GPIO_ReadPin(KEY1_GPIO_Port,KEY1_Pin);
 	key[1].status = HAL_GPIO_ReadPin(KEY2_GPIO_Port,KEY2_Pin);
-	key[2].status = HAL_GPIO_ReadPin(EC11_Button_GPIO_Port,EC11_Button_Pin);
-	for (int i =0; i<3;i++)
+	
+	for (int i =0; i<2;i++)
 	{
 		if (key[i].status == 0)
 		{
 			key[i].cnt++;
-			if (key[i].cnt >=2)
+			if (key[i].cnt >=2)//涓ゆ娑堟姈鍗冲彲
 			{
 				key[i].cnt =2;
 				key[i].flag =1;
@@ -39,22 +38,19 @@ void key_scanTask()
 			key[i].cnt =0;
 		}
 	}
-}
-
-=======
-#include "function.h"
-
-
-
-void page_task(uint8_t select_flag)
-{
-	if(select_flag == 0)//开机默认页面
+	key[2].status = HAL_GPIO_ReadPin(Encoder_Key_GPIO_Port,Encoder_Key_Pin);
+	if( key[2].status == 0)
 	{
-		OLED_ShowString(0,0,"Wait start...",OLED_8X16);
+		key[2].cnt++;
+		if (key[2].cnt >=2)
+		{
+			key[2].cnt =2;
+			key[2].flag =1;
+		}
 	}
-	
-	OLED_Update(); // 刷新屏幕显示
-	
-	
+	else
+	{
+		key[2].cnt =0;
+	}
 }
->>>>>>> e6fe05ce2e12f979570d41f9e36a3280f7a708d1
+
