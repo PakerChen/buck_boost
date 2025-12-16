@@ -201,8 +201,8 @@ void StartTask02(void *argument)
   for(;;)
   {
 		key_scanTask();
-    printf("key 1 cnt = %d",key[1].cnt);
-    printf(" key 1 flag = %d\r\n",key[1].flag);
+    //printf("key 1 cnt = %d",key[1].cnt);
+    //printf(" key 1 flag = %d\r\n",key[1].flag);
     HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
     if(key[1].flag == 1)
     {
@@ -217,6 +217,7 @@ void StartTask02(void *argument)
     OLED_ShowNum(80,0,key[0].cnt,3,OLED_8X16);
     OLED_ShowNum(80,20,key[1].cnt,3,OLED_8X16);
     OLED_ShowNum(80,40,key[2].cnt,3,OLED_8X16);
+    printf("key 2 cnt = %d\r\n ",key[2].cnt);
     osDelay(100);
   }
   /* USER CODE END StartTask02 */
