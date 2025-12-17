@@ -21,7 +21,7 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "config.h"
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
@@ -152,4 +152,12 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /* USER CODE BEGIN 1 */
 
+float Get_ADC_Value(ADC_HandleTypeDef * hadc)
+{
+	HAL_ADC_Start(hadc);
+	uint16_t adc_temp=HAL_ADC_GetValue(hadc);
+  HAL_ADC_Stop(hadc);
+ // OLED_ShowNum(80,40,adc_temp,4,OLED_8X16);
+	return (float)adc_temp/4095.0*3.30;
+}
 /* USER CODE END 1 */

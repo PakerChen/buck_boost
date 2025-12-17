@@ -12,6 +12,7 @@
 #include "gpio.h"
 #include "i2c.h"
 #include "usart.h"
+#include "adc.h"
 //user header
 #include "OLED.h"
 #include "function.h"

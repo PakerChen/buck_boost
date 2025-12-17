@@ -29,7 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+float Get_ADC_Value(ADC_HandleTypeDef * hadc);
 /* USER CODE END Includes */
 
 extern ADC_HandleTypeDef hadc1;

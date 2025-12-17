@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
+#include "OLED.h"
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
@@ -55,39 +56,15 @@
 osThreadId_t Sys_LED_TaskHandle;
 const osThreadAttr_t Sys_LED_Task_attributes = {
   .name = "Sys_LED_Task",
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityLow,
   .stack_size = 128 * 4
 };
 /* Definitions for KEY_Task */
 osThreadId_t KEY_TaskHandle;
 const osThreadAttr_t KEY_Task_attributes = {
   .name = "KEY_Task",
-  .priority = (osPriority_t) osPriorityLow,
+  .priority = (osPriority_t) osPriorityHigh,
   .stack_size = 128 * 4
-};
-/* Definitions for UART_TX_TASK */
-osThreadId_t UART_TX_TASKHandle;
-const osThreadAttr_t UART_TX_TASK_attributes = {
-  .name = "UART_TX_TASK",
-  .priority = (osPriority_t) osPriorityLow,
-  .stack_size = 128 * 4
-};
-/* Definitions for UART_RX_TASK */
-osThreadId_t UART_RX_TASKHandle;
-const osThreadAttr_t UART_RX_TASK_attributes = {
-  .name = "UART_RX_TASK",
-  .priority = (osPriority_t) osPriorityLow,
-  .stack_size = 128 * 4
-};
-/* Definitions for myQueue01 */
-osMessageQueueId_t myQueue01Handle;
-const osMessageQueueAttr_t myQueue01_attributes = {
-  .name = "myQueue01"
-};
-/* Definitions for myQueue02 */
-osMessageQueueId_t myQueue02Handle;
-const osMessageQueueAttr_t myQueue02_attributes = {
-  .name = "myQueue02"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -104,8 +81,6 @@ const osMessageQueueAttr_t myQueue02_attributes = {
 
 void StartDefaultTask(void *argument);
 void StartTask02(void *argument);
-void StartTask03(void *argument);
-void StartTask04(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -132,13 +107,6 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE END RTOS_TIMERS */
 
-  /* Create the queue(s) */
-  /* creation of myQueue01 */
-  myQueue01Handle = osMessageQueueNew (16, sizeof(uint16_t), &myQueue01_attributes);
-
-  /* creation of myQueue02 */
-  myQueue02Handle = osMessageQueueNew (16, sizeof(uint16_t), &myQueue02_attributes);
-
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
 	
@@ -150,12 +118,6 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of KEY_Task */
   KEY_TaskHandle = osThreadNew(StartTask02, NULL, &KEY_Task_attributes);
-
-  /* creation of UART_TX_TASK */
-  UART_TX_TASKHandle = osThreadNew(StartTask03, NULL, &UART_TX_TASK_attributes);
-
-  /* creation of UART_RX_TASK */
-  UART_RX_TASKHandle = osThreadNew(StartTask04, NULL, &UART_RX_TASK_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -181,8 +143,10 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
 		//System LED ,When you run this code ,the light will sprinkle.
-		
-    osDelay(200);//delay 200ms
+	//	OLED_ShowFloatNum(80, 40, Get_ADC_Value(&hadc1)+0.1, 3, 2, OLED_8X16);
+   // OLED_ShowNum(80, 40, Get_ADC_Value(&hadc1)+1, 3, OLED_8X16);
+    printf("ADC:%d\r\n",(int)(Get_ADC_Value(&hadc1)+1));
+    osDelay(20);//delay 200ms
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -216,59 +180,11 @@ void StartTask02(void *argument)
     }
     OLED_ShowNum(80,0,key[0].cnt,3,OLED_8X16);
     OLED_ShowNum(80,20,key[1].cnt,3,OLED_8X16);
-    OLED_ShowNum(80,40,key[2].cnt,3,OLED_8X16);
-    printf("key 2 cnt = %d\r\n ",key[2].cnt);
-    osDelay(100);
+   // OLED_ShowNum(80,40,key[2].cnt,3,OLED_8X16);
+   // printf("key 2 cnt = %d\r\n ",key[2].cnt);
+    osDelay(10);
   }
   /* USER CODE END StartTask02 */
-}
-
-/* USER CODE BEGIN Header_StartTask03 */
-/**
-* @brief Function implementing the UART_TX_TASK thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTask03 */
-void StartTask03(void *argument)
-{
-  /* USER CODE BEGIN StartTask03 */
-		uint8_t buf[] = "this is test";
-  /* Infinite loop */
-  for(;;)
-  {
-		//TX_Function
-		xQueueSend(DataQueue,buf,10);
-    osDelay(50);
-  }
-  /* USER CODE END StartTask03 */
-}
-
-/* USER CODE BEGIN Header_StartTask04 */
-/**
-* @brief Function implementing the UART_RX_TASK thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartTask04 */
-void StartTask04(void *argument)
-{
-  /* USER CODE BEGIN StartTask04 */
-	uint8_t rece_buf[9];
-  /* Infinite loop */
-  for(;;)
-  {
-		if(pdPASS == xQueueReceive(DataQueue,&rece_buf,10))
-		{	
-			for(int i = 0;i<9;i++)
-				printf("%c", rece_buf[i]);
-		}
-		else 
-			printf("advent error");
-		printf("\r\n");
-    osDelay(50);
-  }
-  /* USER CODE END StartTask04 */
 }
 
 /* Private application code --------------------------------------------------*/
