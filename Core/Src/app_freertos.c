@@ -19,7 +19,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
-#include "OLED.h"
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
@@ -41,7 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+uint32_t encoder_flag = 0;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -175,6 +174,22 @@ void StartTask02(void *argument)
       page_task(page_select_flag);
       key[1].flag =0;
     }
+    if(encoder_flag == 1)
+    {
+      osDelay(1);
+       if (HAL_GPIO_ReadPin(Encoder_A_GPIO_Port, Encoder_A_Pin) == 0)
+       {
+         if (HAL_GPIO_ReadPin(Encoder_B_GPIO_Port, Encoder_B_Pin) == 1)
+         {
+          printf("this is right\n");
+         }
+         else if (HAL_GPIO_ReadPin(Encoder_B_GPIO_Port, Encoder_B_Pin) == 0)
+         {
+          printf("this is left\n");
+         }
+       }
+      encoder_flag = 0;
+    }
     osDelay(50);
   }
   /* USER CODE END StartTask02 */
@@ -182,6 +197,12 @@ void StartTask02(void *argument)
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if(GPIO_Pin == Encoder_A_Pin)
+  {
+     encoder_flag = 1;
+  }
+}
 /* USER CODE END Application */
 

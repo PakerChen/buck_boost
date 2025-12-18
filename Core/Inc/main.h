@@ -59,6 +59,7 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define Encoder_A_Pin GPIO_PIN_0
 #define Encoder_A_GPIO_Port GPIOC
+#define Encoder_A_EXTI_IRQn EXTI0_IRQn
 #define Encoder_B_Pin GPIO_PIN_1
 #define Encoder_B_GPIO_Port GPIOC
 #define Encoder_Key_Pin GPIO_PIN_2
