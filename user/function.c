@@ -14,6 +14,11 @@ void page_task(uint8_t select_flag)
 		//进入第一个页面
 		OLED_ShowString(0, 0, "Set page",OLED_8X16);
 	}
+	else if (select_flag == 2)
+	{
+		//进入第二个页面
+		OLED_ShowString(0, 0, "Run page",OLED_8X16);
+	}
 	OLED_Update(); //每次改完页面都要刷新一下OLED
 }
 
@@ -24,14 +29,14 @@ void key_scanTask()
 	
 	for (int i =0; i<2;i++)
 	{
+		if (key[i].cnt >=2&&key[i].status == 1)//两次消抖即可
+		{
+				key[i].flag =1;
+		}
 		if (key[i].status == 0)
 		{
 			key[i].cnt++;
-			if (key[i].cnt >=2)//两次消抖即可
-			{
-				key[i].cnt =2;
-				key[i].flag =1;
-			}
+			
 		}
 		else
 		{

@@ -29,6 +29,7 @@
 #include "hrtim.h"
 #include "queue.h"
 #include "config.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <sys/types.h>
 /* USER CODE END Includes */
@@ -143,10 +144,8 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
 		//System LED ,When you run this code ,the light will sprinkle.
-	//	OLED_ShowFloatNum(80, 40, Get_ADC_Value(&hadc1)+0.1, 3, 2, OLED_8X16);
-   // OLED_ShowNum(80, 40, Get_ADC_Value(&hadc1)+1, 3, OLED_8X16);
-    printf("ADC:%d\r\n",(int)(Get_ADC_Value(&hadc1)+1));
-    osDelay(20);//delay 200ms
+     HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
+    osDelay(100);//delay 200ms
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -161,28 +160,22 @@ void StartDefaultTask(void *argument)
 void StartTask02(void *argument)
 {
   /* USER CODE BEGIN StartTask02 */
+  static uint8_t page_select_flag =0;
   /* Infinite loop */
   for(;;)
   {
 		key_scanTask();
-    //printf("key 1 cnt = %d",key[1].cnt);
-    //printf(" key 1 flag = %d\r\n",key[1].flag);
-    HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
     if(key[1].flag == 1)
     {
-      page_task(1);
+      page_select_flag+=1;
+      if (page_select_flag >2)
+      {
+        page_select_flag =0;
+      }
+      page_task(page_select_flag);
       key[1].flag =0;
     }
-    else if (key[1].flag ==0)
-    {
-      page_task(0);
-      key[1].flag =0;
-    }
-    OLED_ShowNum(80,0,key[0].cnt,3,OLED_8X16);
-    OLED_ShowNum(80,20,key[1].cnt,3,OLED_8X16);
-   // OLED_ShowNum(80,40,key[2].cnt,3,OLED_8X16);
-   // printf("key 2 cnt = %d\r\n ",key[2].cnt);
-    osDelay(10);
+    osDelay(50);
   }
   /* USER CODE END StartTask02 */
 }
