@@ -16,9 +16,4 @@ void page_task(uint8_t select_flag);
 extern KEY key[3];
 
 void key_scanTask();
-uint8_t Encoder_Scanf(void);
-//获取CLK引脚的状态
-#define GET_CLK_STATE  HAL_GPIO_ReadPin(Encoder_A_GPIO_Port,Encoder_A_Pin)
-//获取DT引脚的状态
-#define GET_DT_STATE    HAL_GPIO_ReadPin(Encoder_B_GPIO_Port,Encoder_B_Pin)
 #endif
