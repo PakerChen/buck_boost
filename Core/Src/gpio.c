@@ -62,17 +62,17 @@ void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(buzzer_GPIO_Port, buzzer_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pin : Encoder_A_Pin */
-  GPIO_InitStruct.Pin = Encoder_A_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(Encoder_A_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : Encoder_B_Pin Encoder_Key_Pin */
-  GPIO_InitStruct.Pin = Encoder_B_Pin|Encoder_Key_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pins : Encoder_A_Pin Encoder_B_Pin */
+  GPIO_InitStruct.Pin = Encoder_A_Pin|Encoder_B_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Encoder_Key_Pin */
+  GPIO_InitStruct.Pin = Encoder_Key_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Encoder_Key_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : user_led_Pin */
   GPIO_InitStruct.Pin = user_led_Pin;
@@ -111,6 +111,9 @@ void MX_GPIO_Init(void)
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
 }
 

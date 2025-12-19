@@ -1,5 +1,6 @@
 #include "config.h"
 #include "main.h"
+#include <stdint.h>
 #include <sys/types.h>
 #include "function.h"
 KEY key[3] = {0};
@@ -57,5 +58,54 @@ void key_scanTask()
 	{
 		key[2].cnt =0;
 	}
+}
+uint8_t Encoder_Scanf(void)
+{
+    static  uint8_t    EC11_CLK_Last= 0;    //EC11的LCK引脚上一次的状态 （A相）
+    static  uint8_t    EC11_DT_Last = 0;     //EC11的DT引脚上一次的状态（B相）
+   	static  uint8_t ScanResult = 0;
+    //当A发生跳变时采集B当前的状态，并将B与上一次的状态进行对比。
+    if(GET_CLK_STATE !=EC11_CLK_Last)
+    {           //若A 0->1 时，B 1->0 正转；若A 1->0 时，B 0->1 正转；
+                //若A 0->1 时，B 0->1 反转；若A 1->0 时，B 1->0 反转
+        if(GET_CLK_STATE == 1)     //EC11_A和上一次状态相比，为上升沿
+        {
+            //EC11_B和上一次状态相比，为下降沿
+            if((EC11_DT_Last == 1)&&(GET_DT_STATE == 0))
+                ScanResult = 1;  //正转
+             //EC11_B和上一次状态相比，为上升沿
+            if((EC11_DT_Last == 0)&&(GET_DT_STATE == 1))
+                ScanResult = 2; //反转
+
+            //>>>>>>>>>>>>>>>>下面为正转一次再反转或反转一次再正转处理<<<<<<<<<<<<<<<<//
+            //A上升沿时，采集的B不变且为0
+            if((EC11_DT_Last == GET_DT_STATE)&&(GET_DT_STATE == 0))
+                ScanResult = 1;                                 //正转
+             //A上升沿时，采集的B不变且为1
+            if((EC11_DT_Last == GET_DT_STATE)&&(GET_DT_STATE == 1))
+                ScanResult = 2;                                //反转
+        }
+        else  //EC11_A和上一次状态相比，为下降沿
+        {
+            //EC11_B和上一次状态相比，为下降沿
+            if((EC11_DT_Last == 1)&&(GET_DT_STATE == 0))
+                ScanResult = 2;                        //反转
+             //EC11_B和上一次状态相比，为上升沿
+            if((EC11_DT_Last == 0)&&(GET_DT_STATE == 1))
+                ScanResult = 1;                         //正转
+
+            //>>>>>>>>>>>>>>>>下面为正转一次再反转或反转一次再正转处理<<<<<<<<<<<<<<<<//
+            //A上升沿时，采集的B不变且为0
+            if((EC11_DT_Last == GET_DT_STATE)&&(GET_DT_STATE == 0))
+                ScanResult = 2;                                //反转
+            //A上升沿时，采集的B不变且为1
+            if((EC11_DT_Last == GET_DT_STATE)&&(GET_DT_STATE == 1))
+                ScanResult = 1;                                 //正转
+        }
+        EC11_CLK_Last = GET_CLK_STATE;   //更新编码器上一个状态暂存变量
+        EC11_DT_Last = GET_DT_STATE;     //更新编码器上一个状态暂存变量
+        return ScanResult;               //返回值的取值：   0：无动作； 1：正转；  2：反转；
+    }
+    return 0;
 }
 

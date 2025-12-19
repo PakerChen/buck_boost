@@ -62,6 +62,7 @@ void Error_Handler(void);
 #define Encoder_A_EXTI_IRQn EXTI0_IRQn
 #define Encoder_B_Pin GPIO_PIN_1
 #define Encoder_B_GPIO_Port GPIOC
+#define Encoder_B_EXTI_IRQn EXTI1_IRQn
 #define Encoder_Key_Pin GPIO_PIN_2
 #define Encoder_Key_GPIO_Port GPIOC
 #define user_led_Pin GPIO_PIN_5
