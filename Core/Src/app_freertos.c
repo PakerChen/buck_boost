@@ -19,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
+#include "function.h"
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
@@ -41,7 +42,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 uint32_t encoder_flag = 0;
-static uint8_t flag = 0;
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -145,6 +146,7 @@ void StartDefaultTask(void *argument)
   {
 		//System LED ,When you run this code ,the light will sprinkle.
      HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
+     page_task();
     osDelay(100);//delay 200ms
   }
   /* USER CODE END StartDefaultTask */
@@ -160,35 +162,21 @@ void StartDefaultTask(void *argument)
 void StartTask02(void *argument)
 {
   /* USER CODE BEGIN StartTask02 */
-  static uint8_t page_select_flag =0;
-  
   /* Infinite loop */
   for(;;)
   {
-		key_scanTask();
-    
+		//key_scanTask();
+    key_Task();
     if(key[1].flag == 1)
     {
-      page_select_flag+=1;
-      if (page_select_flag >2)
+      select_flag+=1;
+      if (select_flag >3)
       {
-        page_select_flag =0;
+        select_flag =0;
       }
-      page_task(page_select_flag);
+      page_task();
       key[1].flag =0;
     }
-    static uint8_t ec11_flag = 0;
-      encoder_flag = 0;  // 立即清除标志位，避免重复处理
-      //ec11_flag = Encoder_Scanf();  // 恢复扫描函数调用！
-      if(flag == 1)
-      {
-        printf("EC11 Left\r\n");
-      }
-      else if (flag  == 2)
-      {
-        printf("EC11 Right\r\n");
-      }
-      flag = 0;
     osDelay(50);
   }
   /* USER CODE END StartTask02 */
@@ -196,6 +184,7 @@ void StartTask02(void *argument)
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
+//EC11旋转编码器
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   
@@ -205,7 +194,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       {
         if(HAL_GPIO_ReadPin(Encoder_B_GPIO_Port, Encoder_B_Pin)==GPIO_PIN_RESET)
         {
-            flag = 1;
+            ECC11_Statues = 1;
         }
       }
   }
@@ -215,7 +204,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       {
         if(HAL_GPIO_ReadPin(Encoder_A_GPIO_Port, Encoder_A_Pin)==GPIO_PIN_RESET)
         {
-            flag = 2;
+            ECC11_Statues = 2;
         }
       }
   }

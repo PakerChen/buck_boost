@@ -4,7 +4,7 @@
 //task
 #include <stdint.h>
 #include <sys/types.h>
-void page_task(uint8_t select_flag);
+void page_task(void);
 
  typedef struct
  {
@@ -14,6 +14,9 @@ void page_task(uint8_t select_flag);
  }KEY;
 
 extern KEY key[3];
+extern uint8_t select_flag;
+void key_Task();
+extern uint8_t ECC11_Statues ;
 
 void key_scanTask();
 #endif

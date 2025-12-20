@@ -105,9 +105,9 @@ int main(void)
 	OLED_Update();
 	HAL_GPIO_WritePin(LED_G_GPIO_Port,LED_G_Pin,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_R_Pin,GPIO_PIN_SET);
-	page_task(0);//OLED屏幕初始化显示
+	page_task();//OLED屏幕初始化显示
 	HAL_UART_Receive_IT(&huart2,(uint8_t *)&data,1);
-	printf("usart init");//初始化系统，
+	printf("usart init");//初始化系统
   HAL_ADC_Stop(&hadc1); // 重置ADC状态
 	HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
   /* USER CODE END 2 */
