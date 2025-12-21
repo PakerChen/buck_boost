@@ -30,15 +30,19 @@ extern "C" {
 
 /* USER CODE BEGIN Includes */
 float Get_ADC_Value(ADC_HandleTypeDef * hadc);
+float Get_Cpu_temp(ADC_HandleTypeDef * hadc);
 /* USER CODE END Includes */
 
 extern ADC_HandleTypeDef hadc1;
+
+extern ADC_HandleTypeDef hadc5;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);
+void MX_ADC5_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 

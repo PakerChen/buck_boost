@@ -2,6 +2,7 @@
 #include "adc.h"
 #include "config.h"
 #include "main.h"
+#include "stm32g474xx.h"
 #include <stdint.h>
 #include <sys/types.h>
 #include "function.h"
@@ -43,8 +44,7 @@ void page_task(void)
 		else
 		{
 			OLED_ShowString(64,32,"ON ",OLED_8X16);
-		}
-		
+		}		
 	}
 	else if (select_flag == 1)
 	{	
@@ -67,6 +67,7 @@ void page_task(void)
 		OLED_ShowChar(72 + 8 * 5, 16, 'A', OLED_8X16);                                          // 显示单位符号
 		OLED_ShowChar(72 + 8 * 5, 32, 'V', OLED_8X16);                                          // 显示单位符号
 		OLED_ShowChar(72 + 8 * 5, 48, 'A', OLED_8X16);                                          // 显示单位符号
+		OLED_ShowFloatNum(65, 0, Get_ADC_Value(&hadc1), 2, 2, OLED_8X16);
 	
 	}
 	else if (select_flag == 3)
@@ -78,6 +79,16 @@ void page_task(void)
 		OLED_ShowChar(64, 0, ':', OLED_8X16);                                                               // 显示冒号
 		OLED_ShowChar(64, 16, ':', OLED_8X16);                                                              // 显示冒号
 		OLED_ShowChar(64, 32, ':', OLED_8X16);                                                              
+	}
+	else if (select_flag == 4)
+	{
+		OLED_Clear();
+		//温度显示界面
+		OLED_ShowString(0,0,"CPUTEM ",OLED_8X16);
+		OLED_ShowString(0,16,"DevTEM ",OLED_8X16);
+		OLED_ShowChar(64, 0, ':', OLED_8X16);                                                   // 显示冒号
+		OLED_ShowChar(64, 16, ':', OLED_8X16);  
+		OLED_ShowFloatNum(65, 0, Get_Cpu_temp(&hadc5), 2, 2, OLED_8X16);                                                // 显示冒号
 	}
 	OLED_Update(); //每次改完页面都要刷新一下OLED
 }

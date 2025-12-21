@@ -96,6 +96,7 @@ int main(void)
   MX_I2C3_Init();
   MX_USART2_UART_Init();
   MX_ADC1_Init();
+  MX_ADC5_Init();
   /* USER CODE BEGIN 2 */
 	HAL_GPIO_WritePin(user_led_GPIO_Port,user_led_Pin,GPIO_PIN_SET);
 	HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_D); //pwm波输出
@@ -109,6 +110,7 @@ int main(void)
 	HAL_UART_Receive_IT(&huart2,(uint8_t *)&data,1);
 	printf("usart init");//初始化系统
   HAL_ADC_Stop(&hadc1); // 重置ADC状态
+  HAL_ADC_Stop(&hadc5); // 重置ADC状态
 	HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
   /* USER CODE END 2 */
 

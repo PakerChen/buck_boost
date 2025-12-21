@@ -19,7 +19,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
-#include "function.h"
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
@@ -170,7 +169,7 @@ void StartTask02(void *argument)
     if(key[1].flag == 1)
     {
       select_flag+=1;
-      if (select_flag >3)
+      if (select_flag >4)
       {
         select_flag =0;
       }

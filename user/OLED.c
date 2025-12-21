@@ -775,14 +775,14 @@ void OLED_ShowFloatNum(uint8_t X, uint8_t Y, double Number, uint8_t IntLength, u
 {
     uint32_t PowNum, IntNum, FraNum;
 
-    if (Number >= 0) // 数字大于等于0
-    {
-        OLED_ShowChar(X, Y, '+', FontSize); // 显示+号
-    } else                                  // 数字小于0
-    {
-        OLED_ShowChar(X, Y, '-', FontSize); // 显示-号
-        Number = -Number;                   // Number取负
-    }
+    // if (Number >= 0) // 数字大于等于0
+    // {
+    //     OLED_ShowChar(X, Y, '+', FontSize); // 显示+号
+    // } else                                  // 数字小于0
+    // {
+    //     OLED_ShowChar(X, Y, '-', FontSize); // 显示-号
+    //     Number = -Number;                   // Number取负
+    // }
 
     /*提取整数部分和小数部分*/
     IntNum = Number;                  // 直接赋值给整型变量，提取整数
