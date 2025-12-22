@@ -100,6 +100,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	HAL_GPIO_WritePin(user_led_GPIO_Port,user_led_Pin,GPIO_PIN_SET);
 	HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_D); //pwm波输出
+  HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
 	HAL_GPIO_WritePin(buzzer_GPIO_Port,buzzer_Pin,GPIO_PIN_RESET);
 	OLED_Init();
 	OLED_Clear();  
@@ -111,7 +112,6 @@ int main(void)
 	printf("usart init");//初始化系统
   HAL_ADC_Stop(&hadc1); // 重置ADC状态
   HAL_ADC_Stop(&hadc5); // 重置ADC状态
-	HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
   /* USER CODE END 2 */
 
   /* Init scheduler */

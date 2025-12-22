@@ -17,6 +17,7 @@ extern KEY key[3];
 extern uint8_t select_flag;
 void key_Task();
 extern uint8_t ECC11_Statues ;
+extern uint32_t duty_value;
 
 void key_scanTask();
 #endif

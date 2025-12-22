@@ -40,8 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-uint32_t encoder_flag = 0;
-
+uint8_t encoder_flag = 0;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -174,7 +173,18 @@ void StartTask02(void *argument)
         select_flag =0;
       }
       page_task();
+      duty_value+=5000;
+      HRTIM1->sTimerxRegs[HRTIM_TIMERINDEX_TIMER_D].CMP1xR = duty_value;
+      if (duty_value>30000)
+      {
+        duty_value =0;
+      }
       key[1].flag =0;
+    }
+    else if (key[2].flag == 1)
+    {
+      
+      key[2].flag =0;
     }
     osDelay(50);
   }

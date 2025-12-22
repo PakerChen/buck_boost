@@ -11,6 +11,7 @@ uint8_t buck_state = 0 ;//0为关，1为开
 uint8_t boost_state = 0 ;//0为关，1为开
 uint8_t select_flag =0;//页面选择标志位
 uint8_t ECC11_Statues = 1;//编码器状态标志位
+uint32_t duty_value = 10000;//占空比初始值
 void page_task(void)
 {
 	if(select_flag == 0)//页面标志位
@@ -45,6 +46,7 @@ void page_task(void)
 		{
 			OLED_ShowString(64,32,"ON ",OLED_8X16);
 		}		
+		 OLED_ShowNum(0,50,duty_value,5,OLED_8X16);
 	}
 	else if (select_flag == 1)
 	{	
