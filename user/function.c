@@ -3,6 +3,7 @@
 #include "config.h"
 #include "main.h"
 #include "stm32g474xx.h"
+#include "stm32g4xx_hal_hrtim.h"
 #include <stdint.h>
 #include <sys/types.h>
 #include "function.h"
@@ -142,12 +143,36 @@ void key_Task()
 		{
 
 			buck_state = !buck_state;
+			if(buck_state ==1)
+			{
+				//开启buck
+				HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_D); //pwm波输出
+				HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
+			}
+			else
+			{
+				//关闭buck
+				HAL_HRTIM_WaveformCountStop(&hhrtim1, HRTIM_TIMERID_TIMER_D); //pwm波输出
+  				HAL_HRTIM_WaveformOutputStop(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
+			}
 			key[2].flag =0;
 			page_task();
 		}
 		else if (key[2].flag ==1&&ECC11_Statues ==2)
 		{
 			boost_state = !boost_state;
+			if(buck_state ==1)
+			{
+				//开启buck
+				HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_F); //pwm波输出
+				HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TF1 | HRTIM_OUTPUT_TF2); // to generate pwm wave .
+			}
+			else
+			{
+				//关闭buck
+				HAL_HRTIM_WaveformCountStop(&hhrtim1, HRTIM_TIMERID_TIMER_F); //pwm波输出
+  				HAL_HRTIM_WaveformOutputStop(&hhrtim1, HRTIM_OUTPUT_TF1 | HRTIM_OUTPUT_TF2); // to generate pwm wave .
+			}
 			key[2].flag =0;
 			page_task();
 		
