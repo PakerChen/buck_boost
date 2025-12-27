@@ -112,6 +112,7 @@ int main(void)
 	printf("usart init");//初始化系统
   HAL_ADC_Stop(&hadc1); // 重置ADC状态
   HAL_ADC_Stop(&hadc5); // 重置ADC状态
+  HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED); // 校准ADC1
   /* USER CODE END 2 */
 
   /* Init scheduler */

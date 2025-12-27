@@ -12,7 +12,6 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
-
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
@@ -50,6 +49,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/user/OLED_Data.c
     ${CMAKE_CURRENT_SOURCE_DIR}/user/config.h
 )
+
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
@@ -69,6 +69,43 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
-
     # Add user defined libraries
+)
+
+# ===================== 核心新增部分：ELF转HEX/BIN =====================
+# 1. 定义输出文件路径（和ELF文件同目录）
+set(ELF_FILE ${CMAKE_PROJECT_NAME})
+set(HEX_FILE ${CMAKE_PROJECT_NAME}.hex)
+set(BIN_FILE ${CMAKE_PROJECT_NAME}.bin)
+
+# 2. 查找ARM工具链中的objcopy工具（自动适配环境变量）
+find_program(OBJCOPY arm-none-eabi-objcopy REQUIRED)
+
+# 3. 添加自定义命令：生成HEX文件
+add_custom_command(
+    TARGET ${CMAKE_PROJECT_NAME} POST_BUILD  # 编译完ELF后执行
+    COMMAND ${OBJCOPY} -O ihex $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${HEX_FILE}
+    COMMENT "Generating ${HEX_FILE} from ELF file"
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}  # 在编译输出目录执行
+)
+
+# 4. 添加自定义命令：生成BIN文件
+add_custom_command(
+    TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${OBJCOPY} -O binary -S $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${BIN_FILE}
+    COMMENT "Generating ${BIN_FILE} from ELF file"
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+# 可选：添加自定义目标，方便手动触发（执行 make hex/bin 即可）
+add_custom_target(
+    hex
+    DEPENDS ${CMAKE_PROJECT_NAME}  # 依赖ELF文件，确保先编译
+    COMMENT "Building only HEX file"
+)
+
+add_custom_target(
+    bin
+    DEPENDS ${CMAKE_PROJECT_NAME}
+    COMMENT "Building only BIN file"
 )

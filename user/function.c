@@ -58,7 +58,7 @@ void page_task(void)
 	else if (select_flag == 2)
 	{	
 		//输入参数查看界面
-		OLED_ShowChinese(0, 0, "输入电压"); // 显示中文字
+		OLED_ShowChinese(0, 0, "电压输入"); // 显示中文字
 		OLED_ShowChinese(0, 16, "输入电流");
 		OLED_ShowChinese(0, 32, "输出电压");
 		OLED_ShowChinese(0, 48, "输出电流");
@@ -70,8 +70,9 @@ void page_task(void)
 		OLED_ShowChar(72 + 8 * 5, 16, 'A', OLED_8X16);                                          // 显示单位符号
 		OLED_ShowChar(72 + 8 * 5, 32, 'V', OLED_8X16);                                          // 显示单位符号
 		OLED_ShowChar(72 + 8 * 5, 48, 'A', OLED_8X16);                                          // 显示单位符号
-		OLED_ShowFloatNum(65, 0, Get_ADC_Value(&hadc1), 2, 2, OLED_8X16);
-	
+		OLED_ShowFloatNum(65, 0, (Get_ADC_Value(&hadc1) /(4.7F / 75.0F)), 2, 2, OLED_8X16);
+		//OLED_ShowFloatNum(65, 0, Get_ADC_Value(&hadc1) , 2, 2, OLED_8X16);
+		//* REF_3V3 / ADC_MAX_VALUE / 62.0F / 0.005F
 	}
 	else if (select_flag == 3)
 	{
