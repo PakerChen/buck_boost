@@ -1,12 +1,11 @@
 #MicroXplorer Configuration settings - do not modify
-ADC1.Channel-0\#ChannelRegularConversion=ADC_CHANNEL_14
+ADC1.Channel-2\#ChannelRegularConversion=ADC_CHANNEL_14
 ADC1.CommonPathInternal=null|null|null|null
-ADC1.ExternalTrigConv=ADC_SOFTWARE_START
-ADC1.IPParameters=Rank-0\#ChannelRegularConversion,Channel-0\#ChannelRegularConversion,SamplingTime-0\#ChannelRegularConversion,OffsetNumber-0\#ChannelRegularConversion,NbrOfConversionFlag,master,ExternalTrigConv,CommonPathInternal
+ADC1.IPParameters=Rank-2\#ChannelRegularConversion,master,Channel-2\#ChannelRegularConversion,SamplingTime-2\#ChannelRegularConversion,OffsetNumber-2\#ChannelRegularConversion,NbrOfConversionFlag,CommonPathInternal
 ADC1.NbrOfConversionFlag=1
-ADC1.OffsetNumber-0\#ChannelRegularConversion=ADC_OFFSET_NONE
-ADC1.Rank-0\#ChannelRegularConversion=1
-ADC1.SamplingTime-0\#ChannelRegularConversion=ADC_SAMPLETIME_2CYCLES_5
+ADC1.OffsetNumber-2\#ChannelRegularConversion=ADC_OFFSET_NONE
+ADC1.Rank-2\#ChannelRegularConversion=1
+ADC1.SamplingTime-2\#ChannelRegularConversion=ADC_SAMPLETIME_2CYCLES_5
 ADC1.master=1
 ADC5.Channel-0\#ChannelRegularConversion=ADC_CHANNEL_TEMPSENSOR_ADC5
 ADC5.CommonPathInternal=null|ADC_CHANNEL_TEMPSENSOR_ADC1|null|null
