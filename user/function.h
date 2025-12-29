@@ -18,6 +18,6 @@ extern uint8_t select_flag;
 void key_Task();
 extern uint8_t ECC11_Statues ;
 extern uint32_t duty_value;
-
+extern uint16_t adc1_buf[1];
 void key_scanTask();
 #endif
