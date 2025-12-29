@@ -145,7 +145,7 @@ void StartDefaultTask(void *argument)
 		//System LED ,When you run this code ,the light will sprinkle.
      HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
      page_task();
-     printf("adc1 value=%d\r\n",adc1_buf[0]);
+     printf("adc1 value=%.2f\r\n",adc1_buf[0]*3.3f/4095.0f/(4.7f/75.0f));
     osDelay(100);//delay 200ms
   }
   /* USER CODE END StartDefaultTask */
