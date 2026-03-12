@@ -23,7 +23,6 @@
 #include "dma.h"
 #include "hrtim.h"
 #include "i2c.h"
-#include "stm32g4xx_hal_adc.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -81,6 +80,7 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
+
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -112,11 +112,13 @@ int main(void)
 	HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_R_Pin,GPIO_PIN_SET);
 	page_task();//OLED屏幕初始化显示
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc1_buf, 1);
-	HAL_UART_Receive_IT(&huart2,(uint8_t *)&data,1);
+//	HAL_UART_Receive_IT(&huart2,(uint8_t *)&data,1);
+  HAL_UARTEx_ReceiveToIdle_DMA(&huart2,(uint8_t *)&u1.DATA,1);
 	printf("usart init");//初始化系统
   HAL_ADC_Stop(&hadc1); // 重置ADC状态
   HAL_ADC_Stop(&hadc5); // 重置ADC状态
   HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED); // 校准ADC1
+  HAL_ADCEx_Calibration_Start(&hadc5, ADC_SINGLE_ENDED); // 校准ADC1
   /* USER CODE END 2 */
 
   /* Init scheduler */

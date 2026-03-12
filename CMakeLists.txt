@@ -8,10 +8,18 @@ cmake_minimum_required(VERSION 3.22)
 #
 
 # Setup compiler settings
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS ON)
+set(CMAKE_C_COMPILER "D:/stm32_cubeMx/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-gcc.exe" CACHE INTERNAL "C Compiler")
+set(CMAKE_CXX_COMPILER "D:/stm32_cubeMx/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-g++.exe" CACHE INTERNAL "C++ Compiler")
+set(CMAKE_ASM_COMPILER ${CMAKE_C_COMPILOR} CACHE INTERNAL "ASM Compiler")
 
+# 强制禁用编译器检查，因为是交叉编译，CMake 可能会误判
+set(CMAKE_C_COMPILER_FORCED TRUE)
+set(CMAKE_CXX_COMPILER_FORCED TRUE)
+
+# ********************************************************************************
+# 2. 强制指定 Ninja 路径（顺带解决之前的 Ninja 问题）
+# ********************************************************************************
+set(CMAKE_MAKE_PROGRAM "D:/stm32_cubeMx/stm32cube/bundles/ninja/1.13.1+st.1/bin/ninja.exe" CACHE INTERNAL "Ninja Program")
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")

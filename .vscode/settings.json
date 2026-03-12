@@ -1,15 +1,21 @@
 {
     "cmake.cmakePath": "cube-cmake",
     "cmake.configureArgs": [
-        "-DCMAKE_COMMAND=cube-cmake"
+        "-DCMAKE_COMMAND=cube-cmake",
+        "-DCMAKE_MAKE_PROGRAM=D:/stm32_cubeMx/stm32cube/bundles/ninja/1.13.1+st.1/bin/ninja.exe",
+        "-DCMAKE_C_COMPILER=D:/stm32_cubeMx/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-gcc.exe",
+        "-DCMAKE_ASM_COMPILER=D:/stm32_cubeMx/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-g++.exe"
     ],
     "cmake.preferredGenerators": [
         "Ninja"
     ],
+    "cmake.ninja.path": "D:/stm32_cubeMx/stm32cube/bundles/ninja/1.13.1+st.1/bin/ninja.exe",
     "stm32cube-ide-clangd.path": "cube",
     "stm32cube-ide-clangd.arguments": [
         "starm-clangd",
-        "--query-driver=${env:CUBE_BUNDLE_PATH}/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-gcc.exe",
-        "--query-driver=${env:CUBE_BUNDLE_PATH}/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-g++.exe"
+        "--query-driver=${env:CUBE_BUNDLE_PATH}/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-gcc*",
+        "--query-driver=${env:CUBE_BUNDLE_PATH}/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-g++*",
+        "-DCMAKE_C_COMPILER=D:/stm32_cubeMx/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-gcc.exe",
+        "-DCMAKE_ASM_COMPILER=D:/stm32_cubeMx/stm32cube/bundles/gnu-tools-for-stm32/13.3.1+st.9/bin/arm-none-eabi-g++.exe"
     ]
 }

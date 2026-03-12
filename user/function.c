@@ -14,6 +14,9 @@ uint8_t select_flag =0;//页面选择标志位
 uint8_t ECC11_Statues = 1;//编码器状态标志位
 uint32_t duty_value = 10000;//占空比初始值
 uint16_t adc1_buf[1]={0};
+U1 u1={0};
+uint8_t command_TaskFlag = 0;
+char text_u1[1024]={0};
 void page_task(void)
 {
 	if(select_flag == 0)//页面标志位
@@ -182,4 +185,26 @@ void key_Task()
 		}
 	}
 }
-
+uint8_t rxData;
+void Uart2_start()
+{
+	HAL_UARTEx_ReceiveToIdle_DMA(&huart2,&rxData,1);
+}
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+{
+	if(huart->Instance == USART2)
+	{
+		command_TaskFlag = 1;
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart2,(uint8_t*)u1.BUF,sizeof(u1.BUF));
+	}
+}
+void command_Task()
+{
+	if(command_TaskFlag == 1)
+	{
+		//HAL_UART_Transmit_DMA(&huart2, u1.BUF, sizeof(u1.BUF));
+		sprintf(text_u1,"rec:%s",u1.BUF);
+		HAL_UART_Transmit_DMA(&huart2,(uint8_t *)text_u1,strlen(text_u1));
+		command_TaskFlag = 0;
+	}
+}
