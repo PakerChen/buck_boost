@@ -17,6 +17,7 @@ uint16_t adc1_buf[1]={0};
 U1 u1={0};
 uint8_t command_TaskFlag = 0;
 char text_u1[1024]={0};
+float Vin_Value = 0.0f;
 void page_task(void)
 {
 	if(select_flag == 0)//页面标志位
@@ -74,8 +75,7 @@ void page_task(void)
 		OLED_ShowChar(72 + 8 * 5, 16, 'A', OLED_8X16);                                          // 显示单位符号
 		OLED_ShowChar(72 + 8 * 5, 32, 'V', OLED_8X16);                                          // 显示单位符号
 		OLED_ShowChar(72 + 8 * 5, 48, 'A', OLED_8X16);                                          // 显示单位符号
-		OLED_ShowFloatNum(65, 0, (Get_ADC_Value(&hadc1) /(4.7F / 75.0F)), 2, 2, OLED_8X16);
-		//OLED_ShowFloatNum(65, 0, Get_ADC_Value(&hadc1) , 2, 2, OLED_8X16);
+		OLED_ShowFloatNum(65, 0, Vin_Value, 2, 2, OLED_8X16);
 		//* REF_3V3 / ADC_MAX_VALUE / 62.0F / 0.005F
 	}
 	else if (select_flag == 3)
@@ -157,7 +157,6 @@ void key_Task()
 			else
 			{
 				//关闭buck
-				
 				HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_F); //pwm波输出
 				HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TF1 | HRTIM_OUTPUT_TF2); // to generate pwm wave .
 			}
@@ -203,8 +202,51 @@ void command_Task()
 	if(command_TaskFlag == 1)
 	{
 		//HAL_UART_Transmit_DMA(&huart2, u1.BUF, sizeof(u1.BUF));
-		sprintf(text_u1,"rec:%s",u1.BUF);
+		sprintf(text_u1,"%s",u1.BUF);
 		HAL_UART_Transmit_DMA(&huart2,(uint8_t *)text_u1,strlen(text_u1));
+		memset(u1.BUF,0,sizeof(u1.BUF));
 		command_TaskFlag = 0;
+	}
+}
+/*
+** ===================================================================
+**     Funtion Name :void adc_sample(void)
+**     Description :处理ADC的数据
+**     Parameters  : none
+**     Returns     : none
+** ===================================================================
+*/
+void adc_sample(void)
+{
+	float vin_temp_all = 0.0f;
+	for(int i =0;i<10;i++)
+	{
+		//计算平均值，取平均值
+		Vin_Value = Get_ADC_Value(&hadc2) /(4.7F / 75.0F);
+		vin_temp_all += Vin_Value;
+	}
+	Vin_Value = vin_temp_all / 5.0f;
+}
+/*
+** ===================================================================
+**     Funtion Name :void VinSwUVP(void)
+**     Description :输入软件欠压保护，低压输入保护,可恢复
+**     Parameters  : none
+**     Returns     : none
+** ===================================================================
+*/
+void VinSwUVP(void)
+{
+	if(Vin_Value < 4.5F)//输入电压小于某个值就关闭输出
+	{
+		HAL_HRTIM_WaveformCountStop(&hhrtim1, HRTIM_TIMERID_TIMER_D); //pwm波输出
+  		HAL_HRTIM_WaveformOutputStop(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
+		HAL_GPIO_WritePin(buzzer_GPIO_Port,buzzer_Pin,GPIO_PIN_SET);
+	}
+	else 
+	{
+		HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_D); //pwm波输出
+		HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TD1 | HRTIM_OUTPUT_TD2); // to generate pwm wave .
+		HAL_GPIO_WritePin(buzzer_GPIO_Port,buzzer_Pin,GPIO_PIN_RESET);
 	}
 }

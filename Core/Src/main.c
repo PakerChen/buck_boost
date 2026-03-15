@@ -72,14 +72,13 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	char data;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
 
   /* USER CODE BEGIN Init */
 
@@ -100,6 +99,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_ADC1_Init();
   MX_ADC5_Init();
+  MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
 	HAL_GPIO_WritePin(user_led_GPIO_Port,user_led_Pin,GPIO_PIN_SET);
 	HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_D); //pwm波输出
@@ -112,12 +112,12 @@ int main(void)
 	HAL_GPIO_WritePin(LED_R_GPIO_Port,LED_R_Pin,GPIO_PIN_SET);
 	page_task();//OLED屏幕初始化显示
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc1_buf, 1);
-//	HAL_UART_Receive_IT(&huart2,(uint8_t *)&data,1);
   HAL_UARTEx_ReceiveToIdle_DMA(&huart2,(uint8_t *)&u1.DATA,1);
-	printf("usart init");//初始化系统
   HAL_ADC_Stop(&hadc1); // 重置ADC状态
+  HAL_ADC_Stop(&hadc2); // 重置ADC状态
   HAL_ADC_Stop(&hadc5); // 重置ADC状态
   HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED); // 校准ADC1
+  HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED); // 校准ADC1
   HAL_ADCEx_Calibration_Start(&hadc5, ADC_SINGLE_ENDED); // 校准ADC1
   /* USER CODE END 2 */
 

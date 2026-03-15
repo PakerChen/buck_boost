@@ -28,4 +28,6 @@ extern uint32_t duty_value;
 extern uint16_t adc1_buf[1];
 void key_scanTask();
 void command_Task();
+void VinSwUVP(void);
+void adc_sample(void);
 #endif

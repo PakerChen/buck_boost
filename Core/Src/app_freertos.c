@@ -143,10 +143,12 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
 		//System LED ,When you run this code ,the light will sprinkle.
-     HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
+     //HAL_GPIO_TogglePin(user_led_GPIO_Port,user_led_Pin);
      page_task();
+     VinSwUVP();
+    adc_sample();
     // printf("adc1 value=%.2f\r\n",adc1_buf[0]*3.3f/4095.0f/(4.7f/75.0f));
-    osDelay(100);//delay 200ms
+    osDelay(10);//delay 200ms
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -164,7 +166,6 @@ void StartTask02(void *argument)
   /* Infinite loop */
   for(;;)
   {
-		//key_scanTask();
     key_Task();
     if(key[1].flag == 1)
     {
